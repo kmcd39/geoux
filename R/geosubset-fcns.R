@@ -45,7 +45,6 @@ x2cos <- function(cz_name = NULL, cz = NULL,
                   countyfp = NULL,
                   cbsa = NULL, plc_id = NULL) {
 
-
   argns <- ls()
   non.null <- map_lgl(argns,
                       ~!is.null(eval(rlang::sym(.x))))
@@ -54,7 +53,7 @@ x2cos <- function(cz_name = NULL, cz = NULL,
     stop("x2cos needs 1 non-null arg (multiple or 0 are NULL")
 
   # get column based on non-null argument
-  col <- argns[non.null]
+  col <- unlist(argns[non.null])
   i <- eval(rlang::sym(col)) # and actual value for that argument
 
   if(! col %in% 'plc_id' )
