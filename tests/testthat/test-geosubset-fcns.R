@@ -3,9 +3,11 @@ devtools::load_all()
 
 
 rx
-
+in.global.env <- 'anything'
 x2cos(cbsa = '33860')
 x2cos(cz = '19700')
+
+
 
 # spatial setup
 library(sf)
@@ -28,7 +30,9 @@ rx %>% filter(statefp == '42')
 rx %>% filter(statefp == '42')
 
 # harrisburg
-tmp <- geosubset(pops, cz = '19200')
+tmp <- geosubset(pops
+                 ,'geoid'
+                 ,cz = '19200')
 
 # PA-portion of Philly cbsa
 tmp <- geosubset(pops, cbsa = '37980')
