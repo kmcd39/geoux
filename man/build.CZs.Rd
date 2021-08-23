@@ -4,7 +4,7 @@
 \alias{build.CZs}
 \title{build.CZs}
 \usage{
-build.CZs(.czs = NULL, crs = 4326)
+build.CZs(.czs = NULL, crs = "+proj=lcc +lon_0=-90 +lat_1=33 +lat_2=45")
 }
 \arguments{
 \item{.czs}{If not null, which CZs to build (5-char identifiers). Otherwise builds

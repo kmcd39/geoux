@@ -8,11 +8,11 @@
 #' abv.rcols
 #'
 #' Shortens identifier column names.
-#'  region.name -> rn
+#' - region.name -> rn
 #'
-#'  region.id -> rid
+#' - region.id -> rid
 #'
-#'  region.type -> rt
+#' - region.type -> rt
 #'
 #' @param x df with columns with name to possibly abbreviate
 #'
@@ -35,7 +35,7 @@ abv.rcols <- function(x) {
 #'
 #' @export add.rns
 add.rns <- function(x, abvcols=T) {
-  xwn <- xwalks::ctx %>%
+  xwn <- geox::rx %>%
     select(matches('cz|cbsa')) %>%
     distinct()
 
@@ -45,7 +45,7 @@ add.rns <- function(x, abvcols=T) {
     rename(region.name = cz_name)
   rns <- rbind(czn,cbn) %>% distinct()
 
-  if(abv.colnames) {
+  if(abvcols) {
     x <- x %>% abv.rcols()
     rns <- rns %>% abv.rcols()
   }
@@ -123,14 +123,14 @@ get.region.identifiers <- function(cz = NULL,
   if (is.null(c(cz, cbsa)))
     stop("no non-null arguments")
 
+  xw <- geox::rx
+
   if (!is.null(cz)) {
-    xw <- xwalks::co2cz
     type <- "cz"
     id <- cz
     name <- xw[xw$cz %in% cz, ]$cz_name[1]
 
   } else if (!is.null(cbsa)) {
-    xw <- xwalks::co2cbsa
     type <- "cbsa"
     id <- cbsa
     name <- xw[xw$cbsa %in% cbsa, ]$cbsa_name[1]

@@ -15,10 +15,13 @@ abv.rcols(x)
 }
 \description{
 Shortens identifier column names.
-region.name -> rn
+\itemize{
+\item region.name -> rn
+}
 }
 \details{
-region.id -> rid
-
-region.type -> rt
+\itemize{
+\item region.id -> rid
+\item region.type -> rt
+}
 }

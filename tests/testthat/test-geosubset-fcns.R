@@ -1,11 +1,16 @@
 library(tidyverse)
-devtools::load_all()
+library(geox)
 
 
-rx
-in.global.env <- 'anything'
-x2cos(cbsa = '33860')
-x2cos(cz = '19700')
+# test xwalks ------------------------------------------------------------------
+
+
+testthat::test_that("philly counties in PA/NJ", {
+  testthat::expect_true(
+  unique(substr(x2cos(cz = '19700')
+         ,1,2) %in% c('34', "42"))
+  )
+})
 
 
 
@@ -79,5 +84,6 @@ testthat::test_that("plc salem subset", {
     all(x2cos(plc_id = '3775000') %in%
           salem.counties))
 })
+
 
 

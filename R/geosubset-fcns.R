@@ -19,6 +19,7 @@
 #'
 #' @return df `x`, subsetted to the specified region.
 #'
+#' @import dplyr
 #' @export geosubset
 geosubset <- function(x, subset.cols = c("geoid")
                       , ...) {
@@ -46,8 +47,9 @@ x2cos <- function(cz_name = NULL, cz = NULL,
                   cbsa = NULL, plc_id = NULL) {
 
   argns <- as.list(environment())
-  non.null <- map_lgl(argns,
+  non.null <- purrr::map_lgl(argns,
                      ~!is.null(.))
+
   # ensure 1 non-null arg
   if(1 != sum(non.null))
     stop("x2cos needs 1 non-null arg (multiple or 0 are NULL")
@@ -57,7 +59,7 @@ x2cos <- function(cz_name = NULL, cz = NULL,
   i <- argns[non.null]
 
   if(! col %in% 'plc_id' )
-    .countyfp <- rx %>%
+    .countyfp <- geox::rx %>%
     filter(get(col) %in% i) %>%
     pull(countyfp)
   else {

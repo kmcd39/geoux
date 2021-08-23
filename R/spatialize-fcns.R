@@ -31,8 +31,8 @@ attach.geos <- function(x, geoid.col = 'geoid'
              1,5))
 
   params <- list(...)
-  ctsf <- map_dfr(.countyfps,
-                  ~do.call(query_fcn,
+  ctsf <- purrr::map_dfr(.countyfps,
+                         ~do.call(query_fcn,
                            c(list(substr(.x, 1,2),
                                   substr(.x, 3,5)),
                              params)))  # (do.call to pass on ... params)
@@ -58,27 +58,30 @@ attach.geos <- function(x, geoid.col = 'geoid'
 #'   all of them.
 #' @param year passed onto `tigris::counties`
 #'
-build.CZs <- function(.czs = NULL, crs = 4326) {
 
+build.CZs <- function(.czs = NULL
+                      , crs = "+proj=lcc +lon_0=-90 +lat_1=33 +lat_2=45") {
+
+  # get all spatial counties
   counties <- tigris::counties(year = 2019)
-  requireNamespace('xwalks')
 
-  co2czs <- xwalks::co2cz
+  # add cz information (trimming if appropriate)
+  co2czs <- geox::rx %>%
+    select(matches('cz|county'))
+
   if(!is.null(.czs))
-    co2czs <-  co2czs %>%
+    co2czs <- co2czs %>%
     filter(cz %in% .czs)
 
   counties <- counties %>%
-    left_join(.czs,
-              by = c("GEOID" = "countyfp",
-                     "STATEFP" = "statefp"))
+    inner_join(co2czs,
+               by = c("GEOID" = "countyfp"))
 
+  # union county geometries by cz
   czs <- counties %>%
     st_transform(crs) %>%
     group_by(cz, cz_name) %>%
     summarise(., do_union = T)
-
-  czs <- czs %>% filter(!is.na(cz))
 
   return(czs)
 }
