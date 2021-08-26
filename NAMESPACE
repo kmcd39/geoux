@@ -3,6 +3,7 @@
 export(abv.rcols)
 export(add.rns)
 export(attach.geos)
+export(build.CZs)
 export(fix.geoid)
 export(geosubset)
 export(get.region.identifiers)

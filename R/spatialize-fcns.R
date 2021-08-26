@@ -58,7 +58,7 @@ attach.geos <- function(x, geoid.col = 'geoid'
 #'   all of them.
 #' @param year passed onto `tigris::counties`
 #'
-
+#' @export build.CZs
 build.CZs <- function(.czs = NULL
                       , crs = "+proj=lcc +lon_0=-90 +lat_1=33 +lat_2=45") {
 
