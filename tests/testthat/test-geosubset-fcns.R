@@ -14,6 +14,31 @@ testthat::test_that("philly counties in PA/NJ", {
 
 
 
+
+# test with multiple czs -------------------------------------------------------
+
+# (visual test)
+library(sf)
+sf_use_s2(F)
+options(tigris_use_cache = TRUE)
+
+# multiple CZs
+mczs <- c("24900", "24701")
+
+
+cos <- tigris::counties()
+cos %>%
+  filter(GEOID %in%
+                 x2cos(cz = mczs)) %>%
+  mapview::mapview()# +
+  {geox::build.CZs(.czs = c("24900", "24701")) %>%
+      mapview::mapview()}
+
+x2cos(cz = mczs)
+
+
+# spatial tests ----------------------------------------------------------------
+
 # spatial setup
 library(sf)
 sf_use_s2(F)

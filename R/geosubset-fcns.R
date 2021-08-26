@@ -41,18 +41,18 @@ geosubset <- function(x, subset.cols = c("geoid")
 #'
 #' @return List of 5-char countyfp codes overlapping with region.
 #'
-#' @export
+#' @export x2cos
 x2cos <- function(cz_name = NULL, cz = NULL,
                   countyfp = NULL,
                   cbsa = NULL, plc_id = NULL) {
 
+  # parse arguments
   argns <- as.list(environment())
   non.null <- purrr::map_lgl(argns,
-                     ~!is.null(.))
-
+                             ~!is.null(.))
   # ensure 1 non-null arg
   if(1 != sum(non.null))
-    stop("x2cos needs 1 non-null arg (multiple or 0 are NULL")
+    stop("x2cos needs 1 non-null arg (multiple or none are NULL")
 
   # get column based on non-null argument
   col <- names(argns[non.null])
@@ -60,16 +60,14 @@ x2cos <- function(cz_name = NULL, cz = NULL,
 
   if(! col %in% 'plc_id' )
     .countyfp <- geox::rx %>%
-    filter(get(col) %in% i) %>%
+    filter(get(col) %in%
+             unlist(i)) %>%
     pull(countyfp)
   else {
     .countyfp <- plc2co(plc_id)
   }
-
   return(.countyfp)
 }
-
-
 
 #' plc2co
 #'
