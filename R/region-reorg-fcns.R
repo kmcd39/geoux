@@ -111,14 +111,17 @@ region.reorg <- function(x, region.str, abvcols = T) {
 #'
 #' @param cz,cbsa one of a cz or cbsa identifier code (either 5-digit # or 5-char
 #'   numeric)
+#' @param remove.slashes Sometimes there are slashes ('/') in cbsa names. Replaces
+#'   with dashes if this is true.
 #' @inheritParams add.rns
 #'
 #' @return a 1-row tibble that organizes the region id/name/type
 #'
 #' @export get.region.identifiers
-get.region.identifiers <- function(cz = NULL,
-                                   cbsa = NULL,
-                                   abvcols = T) {
+get.region.identifiers <- function(cz = NULL
+                                   ,cbsa = NULL
+                                   ,abvcols = T
+                                   ,remove.slashes = T) {
 
   if (is.null(c(cz, cbsa)))
     stop("no non-null arguments")
@@ -141,6 +144,10 @@ get.region.identifiers <- function(cz = NULL,
     region.id = id,
     region.name = name
   )
+
+  if(remove.slashes)
+    out$region.name <- out$region.name %>%
+    gsub("\\/", "-", .)
 
   if(abvcols)
     out <- out %>% abv.rcols()

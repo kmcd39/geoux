@@ -4,13 +4,16 @@
 \alias{get.region.identifiers}
 \title{get.region.identifiers}
 \usage{
-get.region.identifiers(cz = NULL, cbsa = NULL, abvcols = T)
+get.region.identifiers(cz = NULL, cbsa = NULL, abvcols = T, remove.slashes = T)
 }
 \arguments{
 \item{cz, cbsa}{one of a cz or cbsa identifier code (either 5-digit # or 5-char
 numeric)}
 
 \item{abvcols}{whether to abbreviate region id columns}
+
+\item{remove.slashes}{Sometimes there are slashes ('/') in cbsa names. Replaces
+with dashes if this is true.}
 }
 \value{
 a 1-row tibble that organizes the region id/name/type
