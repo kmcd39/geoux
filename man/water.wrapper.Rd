@@ -4,18 +4,19 @@
 \alias{water.wrapper}
 \title{water.wrapper}
 \usage{
-water.wrapper(countyfps = NULL, x = NULL, size.min = 5e+06, ...)
+water.wrapper(x = NULL, .countyfps = NULL, size.min = 5e+06, ...)
 }
 \arguments{
-\item{countyfps}{5-character state/county fp codes. Retrieved using
-\code{county.subset} and supplied \code{x} argument if null.}
+\item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
+get intersection if sf object or crop if bbox.}
 
-\item{x}{\code{sf} or \code{bbox} to get overlapping water areas for. Passed onto
-\code{county.subset} if no county fps are supplied. Also used to spatially subset
-water areas.}
+\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get nhoods
+for.}
 
 \item{size.min}{Minimum size in m^2, after internal boundaries are resolved (if a
 water area is represented by multiple contiguous polygons)}
+
+\item{...}{passed onto \code{query.fcn}}
 }
 \value{
 water areas for region.

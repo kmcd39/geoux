@@ -4,21 +4,16 @@
 \alias{county.subset}
 \title{functions that interface with the \code{tigris} library to query layers.}
 \usage{
-county.subset(x, cos = NULL, year = 2019, ...)
+county.subset(x, cos = NULL, ...)
 }
 \arguments{
-\item{x}{\code{sf} or \code{bbox}}
+\item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
+get intersection if sf object or crop if bbox.}
 
 \item{cos}{counties sf object. If none supplied, they are retrieved using
-\code{tigris} library}
+\code{tigris}/census api}
 
-\item{...}{
-  Arguments passed on to \code{\link[=flexible.spatial.filter]{flexible.spatial.filter}}
-  \describe{
-    \item{\code{polys}}{polygons to get over area \code{x}.}
-    \item{\code{subset.approach}}{spatial filter approach; one of "intersects" or "crop".
-Intersection or cropping to bbox.}
-  }}
+\item{...}{passed onto \code{tigris::counties}}
 }
 \description{
 The flow is: given a spatial layer, can query counties with county_subset, a thin
@@ -26,7 +21,5 @@ wrapper. Then other thin wrappers will call
 county.subset
 }
 \details{
-Given an \code{sf} object, get all counties that intersect. The spatial filter will
-adapt based on input, but can be thrown off when \code{x} isn't coterminous with
-counties. In this case the function \code{xwalks::get.spatial.overlap} can be helpful.
+Given an \code{sf} object or bbox, get all counties that fall within polygon or bbox.
 }

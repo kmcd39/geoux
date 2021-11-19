@@ -4,13 +4,17 @@
 \alias{places.wrapper}
 \title{places.wrapper}
 \usage{
-places.wrapper(.countyfps = NULL, x = NULL, year = 2019, ...)
+places.wrapper(x = NULL, .statefps = NULL, ...)
 }
 \arguments{
-\item{x}{object to derive overlapping statefps from, if statefps is left as null. Aiddtional}
+\item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
+get intersection if sf object or crop if bbox.}
 
-\item{countyfps}{countyfps to get parks for}
+\item{.statefps}{statefps to get areas for}
+
+\item{...}{passed onto \code{tigris::places}}
 }
 \description{
-places.wrapper
+Gets parks in a state, based on census bureau data. Can query from sf object x or
+state fp codes.
 }

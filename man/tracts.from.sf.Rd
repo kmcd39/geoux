@@ -4,8 +4,23 @@
 \alias{tracts.from.sf}
 \title{tracts.from.sf}
 \usage{
-tracts.from.sf(x = NULL, countyfps = NULL, query.fcn = tigris::tracts, ...)
+tracts.from.sf(x = NULL, .countyfps = NULL, query.fcn = tigris::tracts, ...)
+}
+\arguments{
+\item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
+get intersection if sf object or crop if bbox.}
+
+\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get nhoods
+for.}
+
+\item{query.fcn}{tigris query fcn: \code{tracts} or \code{block_groups}}
+
+\item{...}{passed onto \code{query.fcn}}
 }
 \description{
-From an \code{sf} object, gets overlapping tracts or block groups.
+From an \code{sf} object, gets tracts or block groups over overlapping counties.
+}
+\details{
+Note that they may still be trimmed to match supplied area, if \code{x} isn't
+coterminous with counties.
 }

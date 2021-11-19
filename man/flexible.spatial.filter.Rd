@@ -4,9 +4,12 @@
 \alias{flexible.spatial.filter}
 \title{flexible.spatial.filter}
 \usage{
-flexible.spatial.filter(x, polys, subset.approach = c("intersects", "crop"))
+flexible.spatial.filter(x, polys)
 }
 \arguments{
+\item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
+get intersection if sf object or crop if bbox.}
+
 \item{polys}{polygons to get over area \code{x}.}
 
 \item{subset.approach}{spatial filter approach; one of "intersects" or "crop".
