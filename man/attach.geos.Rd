@@ -9,6 +9,7 @@ attach.geos(
   geoid.col = "geoid",
   query.fcn = tigris::tracts,
   crs = 4326,
+  keep.census.cols = F,
   ...
 )
 }
@@ -18,7 +19,10 @@ that first 5 characters are state and county fips codes)}
 
 \item{geoid.col}{column representing geoids}
 
-\item{query.fcn}{function to query geos from census api. Defau9lt gets tracts}
+\item{query.fcn}{function to query geos from census api. Default gets tracts}
+
+\item{keep.census.cols}{Whether to keep all columns from query, like aland,
+awater, etc. If false, just gets geometry.}
 
 \item{...}{passed onto the \code{query.fcn}}
 }

@@ -4,7 +4,9 @@
 #' @param x df with at least 1 column containing state+county geoid hierarchy (so
 #'   that first 5 characters are state and county fips codes)
 #' @param geoid.col column representing geoids
-#' @param query.fcn function to query geos from census api. Defau9lt gets tracts
+#' @param query.fcn function to query geos from census api. Default gets tracts
+#' @param keep.census.cols Whether to keep all columns from query, like aland,
+#'   awater, etc. If false, just gets geometry.
 #' @param ... passed onto the `query.fcn`
 #'
 #' @return `x`, as `sf` object with geometries attached
@@ -13,6 +15,7 @@
 attach.geos <- function(x, geoid.col = 'geoid'
                         ,query.fcn = tigris::tracts
                         ,crs = 4326
+                        ,keep.census.cols = F
                         ,...) {
 
   require(sf)
@@ -35,8 +38,11 @@ attach.geos <- function(x, geoid.col = 'geoid'
                          ~do.call(query.fcn,
                            c(list(substr(.x, 1,2),
                                   substr(.x, 3,5)),
-                             params)))  # (do.call to pass on ... params)
-  ctsf <- ctsf %>% select(geoid = GEOID, geometry)
+                             params)))  %>% # (do.call to pass on ... params)
+    rename_with(tolower)
+
+  if(!keep.census.cols)
+    ctsf <- ctsf %>% select(geoid, geometry)
 
   x <- x %>%
     left_join(ctsf

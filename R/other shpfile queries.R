@@ -35,6 +35,8 @@ get.NHPN <- function(sfx = NULL,
                  full.names = T) %>%
       st_read()
   }
+  hwys <- hwys %>% filter(!st_is_empty(geometry))
+
   colnames(hwys) <- tolower(colnames(hwys))
 
   return(hwys)

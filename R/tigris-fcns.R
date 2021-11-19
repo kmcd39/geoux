@@ -170,10 +170,14 @@ water.wrapper <- function(x = NULL, .countyfps = NULL,
                    , ...)
 
   # union and explode water
-  water <- st_union(water) %>% st_cast("POLYGON") %>% st_sf()
+  water <- st_union(water) %>%
+    st_cast("POLYGON") %>%
+    st_sf(geometry = .) %>%
+    mutate(water.area = st_area(geometry))
 
   # filter by size of union'd body
-  water <- water %>% filter(as.numeric(st_area(.$geometry)) > size.min )
+  water <- water %>%
+    filter(as.numeric(water.area) >= size.min )
 
   if(!is.null(x)) {
     water <- flexible.spatial.filter(x, water)
