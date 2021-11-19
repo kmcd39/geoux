@@ -7,7 +7,7 @@
 attach.geos(
   x,
   geoid.col = "geoid",
-  query_fcn = tigris::tracts,
+  query.fcn = tigris::tracts,
   crs = 4326,
   ...
 )
@@ -18,9 +18,9 @@ that first 5 characters are state and county fips codes)}
 
 \item{geoid.col}{column representing geoids}
 
-\item{query_fcn}{function to query geos from census api. Defau9lt gets tracts}
+\item{query.fcn}{function to query geos from census api. Defau9lt gets tracts}
 
-\item{...}{passed onto \code{query_fcn}}
+\item{...}{passed onto the \code{query.fcn}}
 }
 \value{
 \code{x}, as \code{sf} object with geometries attached

@@ -4,14 +4,14 @@
 #' @param x df with at least 1 column containing state+county geoid hierarchy (so
 #'   that first 5 characters are state and county fips codes)
 #' @param geoid.col column representing geoids
-#' @param query_fcn function to query geos from census api. Defau9lt gets tracts
-#' @param ... passed onto `query_fcn`
+#' @param query.fcn function to query geos from census api. Defau9lt gets tracts
+#' @param ... passed onto the `query.fcn`
 #'
 #' @return `x`, as `sf` object with geometries attached
 #'
 #' @export attach.geos
 attach.geos <- function(x, geoid.col = 'geoid'
-                        ,query_fcn = tigris::tracts
+                        ,query.fcn = tigris::tracts
                         ,crs = 4326
                         ,...) {
 
@@ -32,7 +32,7 @@ attach.geos <- function(x, geoid.col = 'geoid'
 
   params <- list(...)
   ctsf <- purrr::map_dfr(.countyfps,
-                         ~do.call(query_fcn,
+                         ~do.call(query.fcn,
                            c(list(substr(.x, 1,2),
                                   substr(.x, 3,5)),
                              params)))  # (do.call to pass on ... params)
