@@ -90,7 +90,7 @@ places.wrapper <- function(x = NULL, .statefps = NULL,
   if(is.null(.statefps)) {
     cos <- county.subset(x)
     .countyfps <- cos$geoid
-    .statefps <- substr(.countyfps, 1, 2)
+    .statefps <- substr(.countyfps, 1, 2) %>% unique()
   }
 
   plcs <- map_dfr(.statefps,
@@ -122,7 +122,7 @@ parks.wrapper <- function(x = NULL, .statefps = NULL,
   if(is.null(.statefps)) {
     cos <- county.subset(x)
     .countyfps <- cos$geoid
-    .statefps <- substr(.countyfps, 1, 2)
+    .statefps <- substr(.countyfps, 1, 2) %>% unique()
   }
 
   parks <- map_dfr(.statefps,
@@ -144,7 +144,6 @@ parks.wrapper <- function(x = NULL, .statefps = NULL,
 #' water.wrapper
 #'
 #' Gets water areas based on supplied countyfp codes and/or other spatial area.
-#'
 #'
 #' @inheritParams tracts.from.sf
 #' @param size.min Minimum size in m^2, after internal boundaries are resolved (if a

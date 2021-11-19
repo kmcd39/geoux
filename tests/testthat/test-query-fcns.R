@@ -91,6 +91,8 @@ devtools::load_all()
 plcsf.r <- geox::places.wrapper(x = st_bbox(czsf)
                               , year = 2020
                               )
+plcsf.r %>% nrow()
+plcsf.r %>% distinct() %>% nrow()
 
 plcsf.old <-  geox::places.wrapper(x = st_bbox(czsf)
                                    , year = 2011
