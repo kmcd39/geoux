@@ -11,7 +11,6 @@ options(tigris_use_cache = TRUE)
 # dropbox dir or della base dir
 ddir <- Sys.getenv('drop_dir')
 
-
 devtools::load_all()
 
 
@@ -51,6 +50,8 @@ testthat::test_that("spatial query counties", {
 
 # tracts -----------------------------------------------------------------------
 
-cts <- geox::tracts.from.sf(x = czsf)
-
-
+ctsf <- geox::tracts.from.sf(x = czsf)
+bgsf <- geox::tracts.from.sf(x = czsf
+                             ,query.fcn = tigris::block_groups)
+ctsf['aland'] %>% plot()
+bgsf['aland'] %>% plot()

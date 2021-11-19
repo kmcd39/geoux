@@ -34,7 +34,15 @@ county.subset <- function(x, cos = NULL, year = 2019, ...) {
 
 #' tracts.from.sf
 #'
-#' From an `sf` object, gets overlapping tracts or block groups.
+#' From an `sf` object, gets tracts or block groups over overlapping counties.
+#'
+#' Note that they may still be trimmed to match supplied area, if `x` isn't
+#' coterminous with counties.
+#'
+#' @param x sf object to get neighborhoods over
+#' @param countyfps Alternative to x, countyfp (as 5-char characters) to get nhoods for.
+#' @param query.fcn tigris query fcn: `tracts` or `block_groups`
+#' @param ... passed onto `query.fcn`
 #'
 #' @export tracts.from.sf
 tracts.from.sf <- function(x = NULL, countyfps = NULL,
@@ -50,7 +58,7 @@ tracts.from.sf <- function(x = NULL, countyfps = NULL,
   .params <- list(...)
 
   .nhds <- map_dfr(countyfps,
-                   ~do.call(query_fcn
+                   ~do.call(query.fcn
                             , c(list( substr(.x, 1, 2)
                                      ,substr(.x, 3, 5))
                                 , .params))) %>%
