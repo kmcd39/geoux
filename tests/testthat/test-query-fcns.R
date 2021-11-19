@@ -60,6 +60,7 @@ bgsf <- geox::tracts.from.sf(x = czsf
                              ,cb = T
                              ,year = 2018
                              )
+
 ctsf['countyfp'] %>% plot()
 bgsf['countyfp'] %>% plot()
 
@@ -70,6 +71,7 @@ pbgsf <- geox::tracts.from.sf(x = portlandco
                              ,query.fcn = tigris::block_groups
                              ,cb = T
                              ,year = 2018)
+
 
 pctsf['aland'] %>% plot()
 pbgsf['aland'] %>% plot()

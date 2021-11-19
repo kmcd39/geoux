@@ -40,7 +40,7 @@ county.subset <- function(x, cos = NULL,
 #' coterminous with counties.
 #'
 #' @inheritParams flexible.spatial.filter
-#' @param .countyfps Alternative to x, countyfp (as 5-char characters) to get nhoods
+#' @param .countyfps Alternative to x, countyfp (as 5-char characters) to get areas
 #'   for.
 #' @param query.fcn tigris query fcn: `tracts` or `block_groups`
 #' @param ... passed onto `query.fcn`
@@ -79,7 +79,8 @@ tracts.from.sf <- function(x = NULL, .countyfps = NULL,
 #' state fp codes.
 #'
 #' @inheritParams flexible.spatial.filter
-#' @param .statefps statefps to get areas for
+#' @param .statefps Alternative to x, statefp (as 2-char characters) to get areas
+#'   for.
 #' @param ... passed onto `tigris::places`
 #'
 #' @export places.wrapper

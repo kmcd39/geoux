@@ -10,7 +10,7 @@ water.wrapper(x = NULL, .countyfps = NULL, size.min = 5e+06, ...)
 \item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
 get intersection if sf object or crop if bbox.}
 
-\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get nhoods
+\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get areas
 for.}
 
 \item{size.min}{Minimum size in m^2, after internal boundaries are resolved (if a

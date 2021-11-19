@@ -10,7 +10,8 @@ places.wrapper(x = NULL, .statefps = NULL, ...)
 \item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
 get intersection if sf object or crop if bbox.}
 
-\item{.statefps}{statefps to get areas for}
+\item{.statefps}{Alternative to x, statefp (as 2-char characters) to get areas
+for.}
 
 \item{...}{passed onto \code{tigris::places}}
 }

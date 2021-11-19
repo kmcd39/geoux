@@ -10,7 +10,7 @@ tracts.from.sf(x = NULL, .countyfps = NULL, query.fcn = tigris::tracts, ...)
 \item{x}{\code{sf} or \code{bbox} object spanning area you want to filter polys to. Will use
 get intersection if sf object or crop if bbox.}
 
-\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get nhoods
+\item{.countyfps}{Alternative to x, countyfp (as 5-char characters) to get areas
 for.}
 
 \item{query.fcn}{tigris query fcn: \code{tracts} or \code{block_groups}}
