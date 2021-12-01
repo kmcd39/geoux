@@ -32,9 +32,10 @@ county.subset <- function(x, cos = NULL,
 }
 
 
-#' tracts.from.sf
+#' nbhds.from.sf
 #'
-#' From an `sf` object, gets tracts or block groups over overlapping counties.
+#' From a bbox or sf object x, gets tracts or block groups over overlapping counties.
+#' For areas that may be smaller than counties, suggest using st_bbox first.
 #'
 #' Note that they may still be trimmed to match supplied area, if `x` isn't
 #' coterminous with counties.
@@ -45,8 +46,8 @@ county.subset <- function(x, cos = NULL,
 #' @param query.fcn tigris query fcn: `tracts` or `block_groups`
 #' @param ... passed onto `query.fcn`
 #'
-#' @export tracts.from.sf
-tracts.from.sf <- function(x = NULL, .countyfps = NULL,
+#' @export nbhds.from.sf
+nbhds.from.sf <- function(x = NULL, .countyfps = NULL,
                            query.fcn = tigris::tracts,
                            ...) {
 

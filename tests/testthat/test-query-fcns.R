@@ -61,6 +61,8 @@ bgsf <- geox::tracts.from.sf(x = czsf
                              ,year = 2018
                              )
 
+czsf %>% plot()
+
 ctsf['countyfp'] %>% plot()
 bgsf['countyfp'] %>% plot()
 

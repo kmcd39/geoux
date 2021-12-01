@@ -3,7 +3,9 @@
 
 #' get.NHPN
 #'
-#' Get National Highway Planning Network highway data.
+#' Get National Highway Planning Network highway data. NOTE: NHPN data is better for
+#' generating rays, but I now think using tigris::roads is better for many other
+#' uses.
 #'
 #' @param sfx if not NULL, an `sf` object to use to crop hwy data. Will also
 #'   transform hwys to match CRS
@@ -20,6 +22,11 @@ get.NHPN <- function(sfx = NULL,
     paste0(dropbox.dir,
            subdir)
   if(!is.null(sfx)) {
+
+    # needs long/lat crs
+    sfx <- sfx %>% st_transform(4326)
+
+    # turn to well-known text representation
     wkt.str <- sfx %>%
       st_union() %>%
       st_as_text()
