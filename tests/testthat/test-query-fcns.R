@@ -54,8 +54,8 @@ cosf[2] %>% plot()
 # tracts -----------------------------------------------------------------------
 
 
-ctsf <- geox::tracts.from.sf(x = czsf)
-bgsf <- geox::tracts.from.sf(x = czsf
+ctsf <- geox::nbhds.from.sf(x = czsf)
+bgsf <- geox::nbhds.from.sf(x = czsf
                              ,query.fcn = tigris::block_groups
                              ,cb = T
                              ,year = 2018
@@ -68,8 +68,8 @@ bgsf['countyfp'] %>% plot()
 
 # for just portland's county
 portlandco <- cosf %>% filter(grepl('Cumberland', name))
-pctsf <- geox::tracts.from.sf(x = portlandco)
-pbgsf <- geox::tracts.from.sf(x = portlandco
+pctsf <- geox::nbhds.from.sf(x = portlandco)
+pbgsf <- geox::nbhds.from.sf(x = portlandco
                              ,query.fcn = tigris::block_groups
                              ,cb = T
                              ,year = 2018)
@@ -79,7 +79,7 @@ pctsf['aland'] %>% plot()
 pbgsf['aland'] %>% plot()
 
 # bbox crop -- very cool :)
-pbbgsf <- geox::tracts.from.sf(x = st_bbox(portlandco)
+pbbgsf <- geox::nbhds.from.sf(x = st_bbox(portlandco)
                               ,query.fcn = tigris::block_groups
                               ,cb = T
                               ,year = 2018)

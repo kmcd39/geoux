@@ -19,7 +19,7 @@ testthat::test_that("philly counties in PA/NJ", {
 
 # (visual test)
 library(sf)
-sf_use_s2(F)
+sf_use_s2(T)
 options(tigris_use_cache = TRUE)
 
 # multiple CZs
@@ -41,7 +41,7 @@ x2cos(cz = mczs)
 
 # spatial setup
 library(sf)
-sf_use_s2(F)
+sf_use_s2(T)
 options(tigris_use_cache = TRUE)
 Sys.setenv("VROOM_SHOW_PROGRESS"="false")
 
@@ -72,7 +72,6 @@ tmp
 # attach geos
 tmpsf <- attach.geos(tmp)
 tmpsf['estimate'] %>% plot()
-
 
 
 # cz/cbsa subset ---------------------------------------------------------------

@@ -59,7 +59,7 @@ nbhds.from.sf <- function(x = NULL, .countyfps = NULL,
   # download
   .params <- list(...)
 
-  nhds <- map_dfr(.countyfps,
+  nhds <- purrr::map_dfr(.countyfps,
                    ~do.call(query.fcn
                             , c(list( substr(.x, 1, 2)
                                      ,substr(.x, 3, 5))
@@ -126,7 +126,7 @@ parks.wrapper <- function(x = NULL, .statefps = NULL,
     .statefps <- substr(.countyfps, 1, 2) %>% unique()
   }
 
-  parks <- map_dfr(.statefps,
+  parks <- purrr::map_dfr(.statefps,
                    ~tigris::landmarks(.x
                                       , type = "area"
                                       , ...)
@@ -146,7 +146,7 @@ parks.wrapper <- function(x = NULL, .statefps = NULL,
 #'
 #' Gets water areas based on supplied countyfp codes and/or other spatial area.
 #'
-#' @inheritParams tracts.from.sf
+#' @inheritParams nbhds.from.sf
 #' @param size.min Minimum size in m^2, after internal boundaries are resolved (if a
 #'   water area is represented by multiple contiguous polygons)
 #'
@@ -162,7 +162,7 @@ water.wrapper <- function(x = NULL, .countyfps = NULL,
   }
 
   # download water
-  water <- map_dfr(.countyfps,
+  water <- purrr::map_dfr(.countyfps,
                    ~tigris::area_water(state =
                                          substr(., 1, 2),
                                        county =
@@ -174,7 +174,8 @@ water.wrapper <- function(x = NULL, .countyfps = NULL,
   water <- st_union(water) %>%
     st_cast("POLYGON") %>%
     st_sf(geometry = .) %>%
-    mutate(water.area = st_area(geometry))
+    mutate(water.area =
+             st_area(geometry))
 
   # filter by size of union'd body
   water <- water %>%

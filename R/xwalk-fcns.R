@@ -5,31 +5,37 @@
 #' get.spatial.overlap
 #'
 #' Calculates the % overlap between two geographies. Takes two sf objects, a
-#' unique/row identifier column for each; returns a row for each combination of
-#' rows in the input sfs that intersect with one another with a column for the
-#' percent overlap. % overlap can indicate true overlap, or it can be an
-#' artifact of differing resolutions between the shapefiles or other artifacts
-#' of their representation. Filtering to geometries below a very small % overlap
-#' using \code{filter.threshold} or otherwise can remove these slivers.
+#' unique/row identifier column for each; returns a row for each combination of rows
+#' in the input sfs that intersect with one another with a column for the percent
+#' overlap. % overlap can indicate true overlap, or it can be an artifact of
+#' differing resolutions between the shapefiles or other artifacts of their
+#' representation. Filtering to geometries below a very small % overlap using
+#' \code{filter.threshold} or otherwise can remove these slivers.
 #'
 #' @param sf1 First sf object
 #' @param sf2 Second sf object
-#' @param sf1.identifier colname as string for region identifiers for first sf
-#'   object
+#' @param sf1.identifier colname as string for region identifiers for first sf object
 #' @param sf2.identifier colname as string for region identifiers for second sf
 #'   object
-#' @param filter.threshold percent overlap between sf1 and sf2, as decimal,
-#'   below which to trim results before returning.
-#' @import sf dplyr lwgeom
+#' @param filter.threshold percent overlap between sf1 and sf2, as decimal, below
+#'   which to trim results before returning.
+#' @param return.sf Return sf object with geometries. Slows down operation to do so.
+#' @param crs crs to use during spatial overlap calculations. Defaults to EPSG 5070,
+#'   an equal-area projection.
+#'
+#' @import sf
 #'
 #' @export get.spatial.overlap
 get.spatial.overlap <- function(sf1, sf2,
                                 sf1.identifier, sf2.identifier
                                 , filter.threshold = 0.01
-                                , crs = "+proj=lcc +lon_0=-90 +lat_1=33 +lat_2=45") {
+                                , return.sf = F
+                                , crs = 5070) {
   require(dplyr)
   require(sf)
-  require(lwgeom)
+
+  # browser()
+
   # set to long-lat crs
   sf1 <- sf1 %>% st_transform(crs)
   sf2 <- sf2 %>% st_transform(crs)
@@ -50,10 +56,21 @@ get.spatial.overlap <- function(sf1, sf2,
   intersection$int.area <-
     st_area(intersection$geometry)
 
+  # % sf 1 contained in intersection area
   overlap.index <- intersection %>%
-    mutate(perc.area = # % sf 1 contained in intersection area
+    mutate(perc.area =
              as.numeric(int.area) /
              as.numeric(area_1) )
+
+  if(!return.sf)
+    overlap.index <- tibble(overlap.index)
+
+  # When one area is a multipolygon, the areal overlap might be split between two
+  # rows. Group by & sum to combine these rows
+  overlap.index <- overlap.index %>%
+    group_by_at(c(sf1.identifier, sf2.identifier)) %>%
+    summarise(perc.area = sum(perc.area)) %>%
+    ungroup()
 
   # filter based on % size minimum and retain only IDs
   overlap.index <- overlap.index %>%
