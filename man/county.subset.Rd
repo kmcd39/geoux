@@ -2,7 +2,7 @@
 % Please edit documentation in R/tigris-fcns.R
 \name{county.subset}
 \alias{county.subset}
-\title{functions that interface with the \code{tigris} library to query layers.}
+\title{county.subset}
 \usage{
 county.subset(x, cos = NULL, ...)
 }
@@ -16,10 +16,5 @@ get intersection if sf object or crop if bbox.}
 \item{...}{passed onto \code{tigris::counties}}
 }
 \description{
-The flow is: given a spatial layer, can query counties with county_subset, a thin
-wrapper. Then other thin wrappers will call
-county.subset
-}
-\details{
 Given an \code{sf} object or bbox, get all counties that fall within polygon or bbox.
 }

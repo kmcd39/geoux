@@ -5,7 +5,35 @@
 
 
 
-# tigris wrappers --------------------------------------------------------------
+#' trim.tigris.waters
+#'
+#' Tigris returns many very small water areas--- for most purposes, retaining
+#' only a subset of these water areas is preferable. This function applies
+#' filters based on census mtfcc code, feature name, and size to subset
+#' features.
+#'
+#' For list of MTFF codes:
+#' https://www2.census.gov/geo/pdfs/reference/mtfccs2022.pdf
+#'
+#' @param wtr Water simple features, as from tigris::water, with lowercase
+#'   column names
+#' @param mtfccs census mtfcc codes to retain
+#' @param size.floor A catch-all size filter to retain larger features. 100,000
+#'   square meters by default.
+#'
+#' @export trim.tigris.waters
+trim.tigris.waters <- function(wtr,
+                               mtfccs = c('H2051', 'H2053', 'H3010', 'H2040'),
+                               size.floor = 1e5) {
+  wtr %>%
+    filter(mtfcc %in%
+             mtfccs |
+             !is.na(fullname) |
+             awater >= size.floor
+    )
+}
+
+# wrappers to pull tigris geos over an area --------------------------------------------------------------
 
 
 #' county.subset
@@ -152,7 +180,6 @@ parks.wrapper <- function(x = NULL, .statefps = NULL,
 #'
 #' @return water areas for region.
 #'
-#' @export water.wrapper
 water.wrapper <- function(x = NULL, .countyfps = NULL,
                           size.min = 5e6, ...) {
 

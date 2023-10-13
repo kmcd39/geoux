@@ -7,9 +7,6 @@
 plc2co(plc_id, overlap.threshold = 50)
 }
 \arguments{
-\item{plc_id}{Identifier for region to get county
-codes for.}
-
 \item{overlap.threshold}{If a CBG has >= this \% inside a Place boundaries, it will
 be included.}
 }
