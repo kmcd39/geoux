@@ -3,14 +3,16 @@ library(sf)
 
 
 # pull regions, states and census divisions -------------------------------
+statesf <- tigris::states(year = 2022)
+#statesf %>% mapview::mapview()
 
-tigris::regions()
 regionx <- tigris::states(year = 2022) %>%
   tibble() %>%
   rename_with(tolower) %>%
   select(region, division, statefp, stusps, state = name)
 
 regionx
+
 
 
 ## pull regions/divs for names ---------------------------------------------
@@ -34,10 +36,9 @@ regionx <- regionx %>%
             )
 
 regionx <- regionx %>%
-  select(matches("state"), matches("region"), matches("division"))
+  select(matches("state|stusps"), matches("region"), matches("division"))
 
-# write ------------------------------------namespaceImportMethods()# write -------------------------------------------------------------------
-
+# write -----------------------------------
 
 
 ## code to prepare `regionx` dataset goes here
